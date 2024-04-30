@@ -14,12 +14,12 @@ const ToDoInsert = ({onInsert} ) => {
     })
 
     //버튼 눌렀을 때 호출되는 함수
-    const onSubmit = useCallback( e => {
+    const onSubmit =  e => {
         onInsert(value);
         setValue("");
         e.preventDefault(); 
         //submit 이나 button 그리고 a 태그에서 기존에 존재하는 기본 이벤트 핸들러를 제거 
-    }, [onInsert, value]);
+    };
 
   return (
     <div>
