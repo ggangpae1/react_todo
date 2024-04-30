@@ -1,0 +1,45 @@
+#이름으로 아무거나 상관없음
+name: CI/CD react to AWS S3
+
+
+#이벤트
+#main 브랜치에 push가 발생하면 동작
+on:
+  push:
+    branches:
+      - main
+
+#작업
+jobs:
+  #deploy 대신에 다른 이름 가능
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 체크 아웃
+        uses: actions/checkout@v3
+      #위까지 동일
+    
+      #react 의 경우
+      - name: 리액트 빌드
+        run: |
+          npm install
+          npm run build
+
+      #IAM 사용자 등록 - 키를 직접 등록하면 AWS 계정 중지 됨
+      #키를 등록할 때는 GIT HUB의 키 설정 기능 이용
+      #키의 이름은 아무렇게나 설정하고 나중에 설정
+      - name: AWS IAM 사용자 설정
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      #S3에 업로드
+      - name: S3에 빌드한 내용 업로드
+        run: aws s3 sync build/ s3://${{ secrets.AWS_S3_BUCKET}} --acl public-read
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+

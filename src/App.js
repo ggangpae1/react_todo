@@ -19,6 +19,11 @@ function App() {
         text: "Django",
         checked: false
     },
+    {
+      id:3,
+      text: "Flask",
+      checked: false
+  },
 ])
 
 //삽입할 때 id를 설정하기 위한 변수
