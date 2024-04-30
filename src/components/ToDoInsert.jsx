@@ -2,16 +2,16 @@ import React from 'react';
 import { MdAdd } from 'react-icons/md';
 import './ToDoInsert.scss';
 
-import {useState, useEffect, useCallback} from 'react';
+import {useState} from 'react';
 
 const ToDoInsert = ({onInsert} ) => {
     //입력이 있을 때 입력의 내용을 저장할 state
     const [value, setValue] = useState('');
 
     //입력의 변경이 생길 때 호출되는 함수
-    const onChange = useCallback(e => {
+    const onChange = e => {
         setValue(e.target.value);
-    })
+    }
 
     //버튼 눌렀을 때 호출되는 함수
     const onSubmit =  e => {
