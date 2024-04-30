@@ -21,7 +21,7 @@ function App() {
     },
     {
       id:3,
-      text: "Flask",
+      text: "플라스크",
       checked: false
   },
 ])
